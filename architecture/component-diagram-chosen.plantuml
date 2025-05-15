@@ -1,0 +1,25 @@
+    @startuml Case study component diagram
+    !include <C4/C4_Component>
+    !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+    !define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+    !define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+    !include DEVICONS/database.puml
+
+    Person(user, "User", "A user of the system")
+
+    Component(web, "Frontend Application", "React, TypeScript", "Prompts the user for a URL input to generate a video from, shows the video on completion")
+    
+    Container_Boundary(sb1, "Backend application"){   
+        Component(api, "API", "NodeJS, TypeScript", "Allows users query their history of uploaded files and generate new videos")
+        Component(render, "Rendering service", "NodeJS, TypeScript", "Creates a headless browser render of given URL")
+        Component(video_capture, "Video capture service", "NodeJS, TypeScript", "Creates a video from the headless browser render")
+    
+    
+    }
+
+    Rel(user, web, "Inputs URL for upload")
+    Rel(web, api, "calls API, returns video")
+    Rel(api, render, "calls render service, returns headless browser render")
+    Rel(api, video_capture, "calls video capture service, returns video")
+
+@enduml
