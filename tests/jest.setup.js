@@ -1,0 +1,1 @@
+const globals = require('@jest/globals');
