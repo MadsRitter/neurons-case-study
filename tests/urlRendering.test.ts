@@ -11,9 +11,9 @@ jest.mock('puppeteer-screen-recorder', () => ({
 }));
 
 describe('renderUrl', () => {
-  let browser: any;
-  let page: any;
-  let recorder: any;
+  let browser;
+  let page;
+  let recorder;
 
   beforeEach(() => {
     page = {

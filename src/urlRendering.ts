@@ -1,10 +1,10 @@
 import puppeteer from 'puppeteer';
 import { PuppeteerScreenRecorder } from 'puppeteer-screen-recorder';
 import { PassThrough } from 'stream';
+import {setTimeout} from "node:timers/promises";
 
 export async function renderUrl(url: string): Promise<PassThrough> {
-  // Launch a headless browser
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
   
   const recorder = new PuppeteerScreenRecorder(page);
@@ -13,14 +13,12 @@ export async function renderUrl(url: string): Promise<PassThrough> {
     
     const pipeStream = new PassThrough();
     
-
-    // Start video recording
     await recorder.startStream(pipeStream);
 
-    // Navigate to the URL
     await page.goto(url, { waitUntil: 'networkidle2' });
 
-    // Stop video recording
+    await setTimeout(3000);
+
     await recorder.stop();
 
     return pipeStream;
