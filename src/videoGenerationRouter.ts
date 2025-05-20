@@ -3,8 +3,7 @@ import { renderUrl } from './urlRendering';
 
 export const router = express.Router();
 
-router.post('/url', async (req, res, next) => {
-    try {
+router.post('/url', async (req, res) => {
         const { url } = req.body;
         const streamResponse = await renderUrl(url);
         if (!streamResponse) {
@@ -22,9 +21,6 @@ router.post('/url', async (req, res, next) => {
             console.log('Stream finished');
         }
         );
-    }  catch (error) {
-        next(error);
-      }
     
 });
 
